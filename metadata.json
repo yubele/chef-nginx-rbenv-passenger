@@ -1,0 +1,13 @@
+{
+  "name": "nginx-rbenv-passenger",
+  "maintainer": "yusuke@newsdict.net",
+  "maintainer_email": "yusuke@newsdict.net",
+  "license": "All rights reserved",
+  "description": "Installs/Configures nginx-rbenv-passenger",
+  "long_description": "Installs/Configures nginx-rbenv-passenger",
+  "version": "0.1.0",
+  "dependencies": {
+    "rbenv": ">= 0.0.0",
+    "rbenv-install-rubies": ">= 0.0.0"
+  }
+}
