@@ -1,6 +1,6 @@
 nginx-rbenv-passenger Cookbook
 ==============================
-TODO: Enter the cookbook description here.
+supoort distribute: ubuntu
 
 e.g.
 This cookbook makes your favorite breakfast sandwich.
