@@ -1,2 +1,2 @@
-passenger_root "<%= node[:rbenv][:root_path] %>/versions/2.2.0/lib/ruby/gems/2.2.0/gems/passenger-<%= node[:'nginx-rbenv-passenger'][:passenger][:version] %>";
+passenger_root "<%= node[:rbenv][:root_path] %>/versions/<%= node[:rbenv_install_rubies][:global_version] %>/lib/ruby/gems/2.2.0/gems/passenger-<%= node[:'nginx-rbenv-passenger'][:passenger][:version] %>";
 passenger_ruby "<%= node[:rbenv][:root_path] %>/shims/ruby";

@@ -16,26 +16,42 @@ rbenv_gem :passenger do
   version passenger_version
 end
 
+node[:'nginx-rbenv-passenger'][:packages].each do |pkg|
+  package pkg do
+    action :install
+  end
+end
+
 execute "Compile the passenger" do
-  not_if { File.exists?("#{node[:rbenv][:root_path]}/versions/2.2.0/lib/ruby/gems/2.2.0/gems/passenger-#{passenger_version}/buildout/") }
+  not_if { File.exists?("#{node[:rbenv][:root_path]}/versions/#{node[:rbenv_install_rubies][:global_version]}/lib/ruby/gems/2.2.0/gems/passenger-#{passenger_version}/buildout/") }
   command "#{node[:rbenv][:root_path]}/shims/passenger-install-nginx-module  --prefix=#{node[:'nginx-rbenv-passenger'][:nginx][:root_path]} --auto --auto-download && rm #{node[:'nginx-rbenv-passenger'][:nginx][:root_path]}/conf/nginx.conf"
   user 'root'
   group 'root'
   action :run
 end
 
-cookbook_file "nginx.init" do
-  path "/etc/init.d/nginx"
-  action :create
-  mode '0755'
-  user 'root'
-  group 'root'
+case node['platform_family']
+when 'debian'
+  cookbook_file "nginx.init.debian" do
+    path "/etc/init.d/nginx"
+    action :create
+    mode '0755'
+    user 'root'
+    group 'root'
+  end
+when 'rhel'
+  cookbook_file "nginx.init.rhel" do
+    path "/etc/init.d/nginx"
+    action :create
+    mode '0755'
+    user 'root'
+    group 'root'
+  end
 end
 
 template "#{node[:'nginx-rbenv-passenger'][:nginx][:root_path]}/conf/nginx.conf" do
   source "nginx.conf.erb"
   mode '755'
-  not_if { File.exists?("#{node[:'nginx-rbenv-passenger'][:nginx][:root_path]}/conf/nginx.conf") }
 end
 
 link "/usr/local/sbin/nginx" do

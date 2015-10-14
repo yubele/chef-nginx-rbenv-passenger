@@ -1,4 +1,4 @@
-user www-data;
+user <%= node[:'nginx-rbenv-passenger'][:user] %>;
 worker_processes  2;
 
 error_log  /var/log/nginx/error.log;
